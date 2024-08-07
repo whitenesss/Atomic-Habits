@@ -1,13 +1,16 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {"blank": True, "null": True}
 
 
 class Habit(models.Model):
-    user = models.ForeignKey()
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="Пользователь", **NULLABLE
+    )
     location = models.CharField(
         max_length=150,
-        **NULLABLE,
         verbose_name="Место выполнения привычки",
         help_text="Пример: Дома, В парке",
     )
@@ -53,6 +56,18 @@ class Habit(models.Model):
         verbose_name="Указывает на публичность привычки (может ли она быть видна другим пользователям)",
         help_text="True (публичная), False (частная)",
     )
+    created_at = models.DateTimeField(
+        **NULLABLE,
+        verbose_name="Дата создания",
+        help_text="Укажите дату создания",
+        auto_now_add=True,
+    )
+    updated_at = models.DateTimeField(
+        **NULLABLE,
+        verbose_name="Дата изменения",
+        help_text="Укажите дату изменения",
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = "Привычка"
@@ -60,3 +75,23 @@ class Habit(models.Model):
 
     def __str__(self):
         return f"Я буду {self.action} в {self.start_date} в {self.location}"
+
+
+class HabitConnection(models.Model):
+    linked_habit = models.ForeignKey(
+        Habit, on_delete=models.CASCADE,
+        verbose_name="Ссылка на другую привычку, которая связана с текущей (только для полезных привычек)", **NULLABLE,
+        help_text="Прогулка может быть связана с 'Чтением книги' как вознаграждение."
+    )
+    reward = models.CharField(
+        max_length=200,
+        verbose_name="писание вознаграждения за выполнение полезной привычки",
+        help_text="Кусочек торта, Просмотр фильма",
+    )
+
+    class Meta:
+        verbose_name = "Связь привычек"
+        verbose_name_plural = "Связи привычек"
+
+    def __str__(self):
+        return f"{self.reward}"
