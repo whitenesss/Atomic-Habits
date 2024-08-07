@@ -10,6 +10,11 @@ class HabitCreateAPIView(generics.CreateAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitCreateSerializer
 
+    # def perform_create(self, serializer):
+    #     habit = serializer.save()
+    #     habit.owner = self.request.user
+    #     habit.save()
+
 
 class HabitListAPIView(generics.ListAPIView):
     queryset = Habit.objects.all()
@@ -31,6 +36,6 @@ class HabitDestroyAPIView(generics.DestroyAPIView):
     serializer_class = HabitSerializer
 
 
-# class HabitConnectionSet(viewsets.ModelViewSet):
-#     queryset = HabitConnection.objects.all()
-#     serializer_class = HabitConnectionSerializer
+class HabitPublicListAPI(generics.ListAPIView):
+    queryset = Habit.objects.filter(is_public=True)
+    serializer_class = HabitSerializer
