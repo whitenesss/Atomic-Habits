@@ -6,9 +6,15 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, verbose_name="Email address")
-    phone_number = models.CharField(max_length=35, verbose_name="Phone number", blank=True, null=True)
-    tg_name = models.CharField(max_length=50, verbose_name="Telegram username", blank=True, null=True)
-    avatar = models.ImageField(upload_to="users/avatars", verbose_name="Avatar", blank=True, null=True)
+    phone_number = models.CharField(
+        max_length=35, verbose_name="Phone number", blank=True, null=True
+    )
+    tg_name = models.CharField(
+        max_length=50, verbose_name="Telegram username", blank=True, null=True
+    )
+    avatar = models.ImageField(
+        upload_to="users/avatars", verbose_name="Avatar", blank=True, null=True
+    )
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
