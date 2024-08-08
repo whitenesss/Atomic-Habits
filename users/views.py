@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
-
+from rest_framework import viewsets, permissions
 from users.models import User
 from users.serializer import UserSerializer
 
@@ -10,12 +9,12 @@ class UserCreateRetrieveUpdateDestroyAPIView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-    # def get_permissions(self):
-    #     if self.action in ['create']:
-    #         self.permission_classes = (permissions.AllowAny,)
-    #     else:
-    #         self.permission_classes = (permissions.IsAuthenticated,)
-    #     return super().get_permissions()
+    def get_permissions(self):
+        if self.action in ["create"]:
+            self.permission_classes = (permissions.AllowAny,)
+        else:
+            self.permission_classes = (permissions.IsAuthenticated,)
+        return super().get_permissions()
 
     def perform_create(self, serializer):
         user = serializer.save(is_active=True)
