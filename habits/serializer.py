@@ -1,12 +1,13 @@
 from rest_framework import serializers
 
 from habits.models import Habit, HabitConnection
+from habits.validators import FrequencyValidator, DurationValidator
 
 
 class UserHabit(serializers.ModelSerializer):
     class Meta:
         model = HabitConnection
-        fields = ['habit']
+        fields = ["habit"]
 
 
 class HabitSerializer(serializers.ModelSerializer):
@@ -19,10 +20,13 @@ class HabitCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Habit
         fields = "__all__"
+        validators = [
+            FrequencyValidator(fielf="frequency"),
+            DurationValidator(fielf="duration"),
+        ]
 
     def validate(self, data):
         print("Validating data:", data)
-        # print(data.get('reward'))
         """проверяем ввод данных пользовалетеля по положительным и связанным привычкам"""
         if data.get("reward") and data.get("linked_habit"):
             raise serializers.ValidationError(
@@ -57,12 +61,10 @@ class HabitListSerializer(serializers.ModelSerializer):
             "frequency",
             "reward",
             "duration",
-            "is_public"
-
+            "is_public",
         ]
 
     # def get_habit_public(self, obj):
     #     print(obj)
     #     user = self.context['request'].user
     #     return HabitConnection.objects.filter(user=user, habit=obj)
-

@@ -78,14 +78,12 @@ class Habit(models.Model):
 
 
 class HabitConnection(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="связь с пользователем",  **NULLABLE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="связь с пользователем", **NULLABLE
+    )
 
     habit = models.ForeignKey(
-        Habit,
-        on_delete=models.CASCADE,
-        verbose_name="связь с привычкой",
-        **NULLABLE
-
+        Habit, on_delete=models.CASCADE, verbose_name="связь с привычкой", **NULLABLE
     )
     date_added = models.DateTimeField(auto_now_add=True, **NULLABLE)
 
