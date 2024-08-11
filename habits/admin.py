@@ -13,9 +13,7 @@ class HabitAdmin(admin.ModelAdmin):
         "start_date",
         "action",
         "is_pleasant",
-
         "frequency",
-
         "duration",
         "is_public",
         "created_at",

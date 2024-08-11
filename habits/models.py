@@ -78,16 +78,14 @@ class Habit(models.Model):
 
 
 class HabitConnection(models.Model):
-    linked_habit = models.ForeignKey(
-        Habit, on_delete=models.CASCADE,
-        verbose_name="Ссылка на другую привычку, которая связана с текущей (только для полезных привычек)", **NULLABLE,
-        help_text="Прогулка может быть связана с 'Чтением книги' как вознаграждение."
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="связь с пользователем", **NULLABLE
     )
-    reward = models.CharField(
-        max_length=200,
-        verbose_name="писание вознаграждения за выполнение полезной привычки",
-        help_text="Кусочек торта, Просмотр фильма",
+
+    habit = models.ForeignKey(
+        Habit, on_delete=models.CASCADE, verbose_name="связь с привычкой", **NULLABLE
     )
+    date_added = models.DateTimeField(auto_now_add=True, **NULLABLE)
 
     class Meta:
         verbose_name = "Связь привычек"
