@@ -109,7 +109,7 @@ def schedule_habit_tasks():
             continue
 
 
-# def schedule_habit_connection():
-#     # Очистка текущего расписания
-#     PeriodicTask.objects.all().delete()
-#     # Получение всех привычек
+def schedule_habit_connection():
+    # Очистка текущего расписания
+    PeriodicTask.objects.all().delete()
+    # Получение всех привычек
