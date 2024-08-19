@@ -40,7 +40,7 @@ services:
     build: .
     tty: true
     command: celery -A config worker -l INFO -P eventlet
-#    restart: on-failure
+    restart: on-failure
     volumes:
       - .:/app
     depends_on:
@@ -54,7 +54,7 @@ services:
     build: .
     tty: true
     command: celery -A config beat -l INFO
-#    restart: on-failure
+    restart: on-failure
     volumes:
       - .:/app
     depends_on:
